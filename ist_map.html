@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_1eab2cc7562fd0c93ec0f20efa136b14 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.css"/>
+</head>
+<body>
+    
+    
+<div id="legend-toggle" style="
+     position: fixed;
+     bottom: 30px; left: 30px;
+     z-index:9998;
+     background-color: #ffffff;
+     border: 1px solid #888;
+     border-radius: 5px;
+     padding: 5px 10px;
+     cursor: pointer;
+     font-weight: bold;
+     box-shadow: 0 0 5px rgba(0,0,0,0.3);
+">🎨 Renk Açıklaması</div>
+
+<div id="legend-content" style="
+     position: fixed; 
+     bottom: 70px; left: 30px; 
+     z-index:9999;
+     font-size:14px;
+     background-color: rgba(255,255,255,0.95);
+     padding: 10px 15px;
+     border-radius: 8px;
+     box-shadow: 0 0 5px rgba(0,0,0,0.4);
+     display: none;
+">
+<b>🗓️ Yıllara Göre Renkler:</b><br>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 5px;">
+
+    <div style="display: flex; align-items: center; gap: 5px;">
+        <i style="background:red; width:15px; height:15px; display:inline-block; border:1px solid #000;"></i>
+        2014
+    </div>
+    
+    <div style="display: flex; align-items: center; gap: 5px;">
+        <i style="background:green; width:15px; height:15px; display:inline-block; border:1px solid #000;"></i>
+        2015
+    </div>
+    
+    <div style="display: flex; align-items: center; gap: 5px;">
+        <i style="background:blue; width:15px; height:15px; display:inline-block; border:1px solid #000;"></i>
+        2017
+    </div>
+    
+    <div style="display: flex; align-items: center; gap: 5px;">
+        <i style="background:purple; width:15px; height:15px; display:inline-block; border:1px solid #000;"></i>
+        2018
+    </div>
+    
+    <div style="display: flex; align-items: center; gap: 5px;">
+        <i style="background:orange; width:15px; height:15px; display:inline-block; border:1px solid #000;"></i>
+        2021
+    </div>
+    
+    <div style="display: flex; align-items: center; gap: 5px;">
+        <i style="background:darkred; width:15px; height:15px; display:inline-block; border:1px solid #000;"></i>
+        2024
+    </div>
+    
+</div>
+</div>
+
+<script>
+document.getElementById('legend-toggle').onclick = function() {
+    var content = document.getElementById('legend-content');
+    content.style.display = (content.style.display === 'none') ? 'block' : 'none';
+};
+</script>
+    
+            <div class="folium-map" id="map_1eab2cc7562fd0c93ec0f20efa136b14" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_1eab2cc7562fd0c93ec0f20efa136b14 = L.map(
+                "map_1eab2cc7562fd0c93ec0f20efa136b14",
+                {
+                    center: [41.0082, 28.9784],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 11,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_56c4e018f6dadc60ba6e474eb4aa6bba = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_56c4e018f6dadc60ba6e474eb4aa6bba.addTo(map_1eab2cc7562fd0c93ec0f20efa136b14);
+        
+    
+            var heat_map_a663774ca465f7f84ee9dde00eb126f9 = L.heatLayer(
+                [[41.084044, 28.961203], [41.067394, 29.109098], [41.090484, 29.047115], [40.999724, 28.800158], [40.991945, 28.853519], [41.105465, 28.584396], [41.091506, 28.896281], [41.002895, 28.954278], [41.000126, 28.801814], [40.989513, 28.792537]],
+                {
+  "minOpacity": 0.5,
+  "maxZoom": 18,
+  "radius": 10,
+  "blur": 15,
+}
+            );
+        
+    
+            heat_map_a663774ca465f7f84ee9dde00eb126f9.addTo(map_1eab2cc7562fd0c93ec0f20efa136b14);
+        
+    
+            var marker_cluster_2a91eca5b6c90c2edc46bad8c78c4c97 = L.markerClusterGroup(
+                {
+}
+            );
+        
+    
+            var marker_5547191babc0218e4cd3b55d9fbc71b1 = L.marker(
+                [41.084044, 28.961203],
+                {
+}
+            ).addTo(marker_cluster_2a91eca5b6c90c2edc46bad8c78c4c97);
+        
+    
+            var icon_1330887bcda51e7b979a14ad13c8c50b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ec10b58450b4931fa32206831880ca8c = L.popup({
+  "maxWidth": 300,
+  "minWidth": 200,
+});
+
+        
+            
+                var html_185adb29bd0148507dc71aa86c085ed1 = $(`<div id="html_185adb29bd0148507dc71aa86c085ed1" style="width: 100.0%; height: 100.0%;">     <b>🗂️ Başlık:</b> Bağlantı Yolu AKOM-TEM Hasdal Yönü, sol şerit trafik kazası (hasarlı).<br>     <b>🕒 Saat:</b> 17:28:00<br>     <b>📅 Tarih:</b> 2024-02-15     </div>`)[0];
+                popup_ec10b58450b4931fa32206831880ca8c.setContent(html_185adb29bd0148507dc71aa86c085ed1);
+            
+        
+
+        marker_5547191babc0218e4cd3b55d9fbc71b1.bindPopup(popup_ec10b58450b4931fa32206831880ca8c)
+        ;
+
+        
+    
+    
+            marker_5547191babc0218e4cd3b55d9fbc71b1.bindTooltip(
+                `<div>
+                     Bağlantı Yolu AKOM-TEM Hasdal Yönü, sol şerit trafik kazası (hasarlı).
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5547191babc0218e4cd3b55d9fbc71b1.setIcon(icon_1330887bcda51e7b979a14ad13c8c50b);
+            
+    
+            var marker_63fe43d76fcdfa16d41c07b4d1a747d8 = L.marker(
+                [41.067394, 29.109098],
+                {
+}
+            ).addTo(marker_cluster_2a91eca5b6c90c2edc46bad8c78c4c97);
+        
+    
+            var icon_9bf7388827cfbd2b48b7bac87eb2ff05 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_153b72234cc984224529cb3d8ef79eca = L.popup({
+  "maxWidth": 300,
+  "minWidth": 200,
+});
+
+        
+            
+                var html_ff3267b4fca6d6716ceeebade2e957b6 = $(`<div id="html_ff3267b4fca6d6716ceeebade2e957b6" style="width: 100.0%; height: 100.0%;">     <b>🗂️ Başlık:</b> TEM Elmalı-Ümraniye Yönü, sağ şerit trafik kazası (hasarlı).<br>     <b>🕒 Saat:</b> 21:02:00<br>     <b>📅 Tarih:</b> 2021-03-26     </div>`)[0];
+                popup_153b72234cc984224529cb3d8ef79eca.setContent(html_ff3267b4fca6d6716ceeebade2e957b6);
+            
+        
+
+        marker_63fe43d76fcdfa16d41c07b4d1a747d8.bindPopup(popup_153b72234cc984224529cb3d8ef79eca)
+        ;
+
+        
+    
+    
+            marker_63fe43d76fcdfa16d41c07b4d1a747d8.bindTooltip(
+                `<div>
+                     TEM Elmalı-Ümraniye Yönü, sağ şerit trafik kazası (hasarlı).
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_63fe43d76fcdfa16d41c07b4d1a747d8.setIcon(icon_9bf7388827cfbd2b48b7bac87eb2ff05);
+            
+    
+            var marker_0fd3ac83d33751ab9652e35a0e820d7e = L.marker(
+                [41.090484, 29.047115],
+                {
+}
+            ).addTo(marker_cluster_2a91eca5b6c90c2edc46bad8c78c4c97);
+        
+    
+            var icon_5bdc477dd95a5cc98ae8afddf66cc43e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_af794ae9be0d64467b57605eb1c6df63 = L.popup({
+  "maxWidth": 300,
+  "minWidth": 200,
+});
+
+        
+            
+                var html_0979ba6f0fb1f8e20a0771a74596d32b = $(`<div id="html_0979ba6f0fb1f8e20a0771a74596d32b" style="width: 100.0%; height: 100.0%;">     <b>🗂️ Başlık:</b> Tem FSM Avrupa-Anadolu Yönü Trafik kazası (hasarlı)<br>     <b>🕒 Saat:</b> 20:01:00<br>     <b>📅 Tarih:</b> 2015-07-23     </div>`)[0];
+                popup_af794ae9be0d64467b57605eb1c6df63.setContent(html_0979ba6f0fb1f8e20a0771a74596d32b);
+            
+        
+
+        marker_0fd3ac83d33751ab9652e35a0e820d7e.bindPopup(popup_af794ae9be0d64467b57605eb1c6df63)
+        ;
+
+        
+    
+    
+            marker_0fd3ac83d33751ab9652e35a0e820d7e.bindTooltip(
+                `<div>
+                     Tem FSM Avrupa-Anadolu Yönü Trafik kazası (hasarlı)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0fd3ac83d33751ab9652e35a0e820d7e.setIcon(icon_5bdc477dd95a5cc98ae8afddf66cc43e);
+            
+    
+            var marker_ae28d086e22db6a78bf70835b1e2032c = L.marker(
+                [40.999724, 28.800158],
+                {
+}
+            ).addTo(marker_cluster_2a91eca5b6c90c2edc46bad8c78c4c97);
+        
+    
+            var icon_371b55d555ddbc779d8829d26f4b0161 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "purple",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b78aa546bb25aa16c1c09272674ec434 = L.popup({
+  "maxWidth": 300,
+  "minWidth": 200,
+});
+
+        
+            
+                var html_f0300abbd6f743e42cd079ed9788eaae = $(`<div id="html_f0300abbd6f743e42cd079ed9788eaae" style="width: 100.0%; height: 100.0%;">     <b>🗂️ Başlık:</b> D100 Sefaköy-Florya(Yanyol), sağ şerit Trafik kazası (zincirleme).<br>     <b>🕒 Saat:</b> 07:11:00<br>     <b>📅 Tarih:</b> 2018-02-14     </div>`)[0];
+                popup_b78aa546bb25aa16c1c09272674ec434.setContent(html_f0300abbd6f743e42cd079ed9788eaae);
+            
+        
+
+        marker_ae28d086e22db6a78bf70835b1e2032c.bindPopup(popup_b78aa546bb25aa16c1c09272674ec434)
+        ;
+
+        
+    
+    
+            marker_ae28d086e22db6a78bf70835b1e2032c.bindTooltip(
+                `<div>
+                     D100 Sefaköy-Florya(Yanyol), sağ şerit Trafik kazası (zincirleme).
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ae28d086e22db6a78bf70835b1e2032c.setIcon(icon_371b55d555ddbc779d8829d26f4b0161);
+            
+    
+            var marker_ad5abedff9b3640b2ff5f8c875fe73f1 = L.marker(
+                [40.991945, 28.853519],
+                {
+}
+            ).addTo(marker_cluster_2a91eca5b6c90c2edc46bad8c78c4c97);
+        
+    
+            var icon_c60726fc0f84def26a2887bf3509cef6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7c6b35f6eb2d9f39fb676cbadb370231 = L.popup({
+  "maxWidth": 300,
+  "minWidth": 200,
+});
+
+        
+            
+                var html_b342b689e4125f6946824762e7be72f7 = $(`<div id="html_b342b689e4125f6946824762e7be72f7" style="width: 100.0%; height: 100.0%;">     <b>🗂️ Başlık:</b> D100 Şirinevler(yanyol)-İncirli yönü, sağ şerit Trafik kazası (hasarlı)<br>     <b>🕒 Saat:</b> 18:59:00<br>     <b>📅 Tarih:</b> 2017-09-18     </div>`)[0];
+                popup_7c6b35f6eb2d9f39fb676cbadb370231.setContent(html_b342b689e4125f6946824762e7be72f7);
+            
+        
+
+        marker_ad5abedff9b3640b2ff5f8c875fe73f1.bindPopup(popup_7c6b35f6eb2d9f39fb676cbadb370231)
+        ;
+
+        
+    
+    
+            marker_ad5abedff9b3640b2ff5f8c875fe73f1.bindTooltip(
+                `<div>
+                     D100 Şirinevler(yanyol)-İncirli yönü, sağ şerit Trafik kazası (hasarlı)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ad5abedff9b3640b2ff5f8c875fe73f1.setIcon(icon_c60726fc0f84def26a2887bf3509cef6);
+            
+    
+            var marker_ea3354d7e3e25d1c999357e8061acef1 = L.marker(
+                [41.105465, 28.584396],
+                {
+}
+            ).addTo(marker_cluster_2a91eca5b6c90c2edc46bad8c78c4c97);
+        
+    
+            var icon_827299decdcfd335b1f74fe284973d62 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2cf5676769dcec8f2e495f44c07053a0 = L.popup({
+  "maxWidth": 300,
+  "minWidth": 200,
+});
+
+        
+            
+                var html_fca64a9a62863f3a1997fee4a48f5db2 = $(`<div id="html_fca64a9a62863f3a1997fee4a48f5db2" style="width: 100.0%; height: 100.0%;">     <b>🗂️ Başlık:</b> Tem Büyükçekmece-Hadımköy Yönü Trafik kazası (yaralanmalı)<br>     <b>🕒 Saat:</b> 22:32:00<br>     <b>📅 Tarih:</b> 2015-02-10     </div>`)[0];
+                popup_2cf5676769dcec8f2e495f44c07053a0.setContent(html_fca64a9a62863f3a1997fee4a48f5db2);
+            
+        
+
+        marker_ea3354d7e3e25d1c999357e8061acef1.bindPopup(popup_2cf5676769dcec8f2e495f44c07053a0)
+        ;
+
+        
+    
+    
+            marker_ea3354d7e3e25d1c999357e8061acef1.bindTooltip(
+                `<div>
+                     Tem Büyükçekmece-Hadımköy Yönü Trafik kazası (yaralanmalı)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ea3354d7e3e25d1c999357e8061acef1.setIcon(icon_827299decdcfd335b1f74fe284973d62);
+            
+    
+            var marker_1f0e454242c453160e5e188dcecd0533 = L.marker(
+                [41.091506, 28.896281],
+                {
+}
+            ).addTo(marker_cluster_2a91eca5b6c90c2edc46bad8c78c4c97);
+        
+    
+            var icon_fe5f0c7dd11b8632e06661c216dbd0bd = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5c8468d566e0e7bc7168682d3ef3e520 = L.popup({
+  "maxWidth": 300,
+  "minWidth": 200,
+});
+
+        
+            
+                var html_77d2bb3d79194887165470df9e6e831b = $(`<div id="html_77d2bb3d79194887165470df9e6e831b" style="width: 100.0%; height: 100.0%;">     <b>🗂️ Başlık:</b> Tem GOP.-Metris Yönü Trafik kazası (hasarlı)<br>     <b>🕒 Saat:</b> 17:55:00<br>     <b>📅 Tarih:</b> 2014-07-17     </div>`)[0];
+                popup_5c8468d566e0e7bc7168682d3ef3e520.setContent(html_77d2bb3d79194887165470df9e6e831b);
+            
+        
+
+        marker_1f0e454242c453160e5e188dcecd0533.bindPopup(popup_5c8468d566e0e7bc7168682d3ef3e520)
+        ;
+
+        
+    
+    
+            marker_1f0e454242c453160e5e188dcecd0533.bindTooltip(
+                `<div>
+                     Tem GOP.-Metris Yönü Trafik kazası (hasarlı)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1f0e454242c453160e5e188dcecd0533.setIcon(icon_fe5f0c7dd11b8632e06661c216dbd0bd);
+            
+    
+            var marker_91a05943293e7de2936c171bad4421d8 = L.marker(
+                [41.002895, 28.954278],
+                {
+}
+            ).addTo(marker_cluster_2a91eca5b6c90c2edc46bad8c78c4c97);
+        
+    
+            var icon_b813ff2923dc8ddd2b17f57de10437b7 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d6f8da5703223f5b99f53eae7275ee82 = L.popup({
+  "maxWidth": 300,
+  "minWidth": 200,
+});
+
+        
+            
+                var html_d52c8d560dfc47113837bc1c0bea0766 = $(`<div id="html_d52c8d560dfc47113837bc1c0bea0766" style="width: 100.0%; height: 100.0%;">     <b>🗂️ Başlık:</b> S.Yolu Yenikapı-Kumkapı yönü Trafik kazası (hasarlı)<br>     <b>🕒 Saat:</b> 09:20:00<br>     <b>📅 Tarih:</b> 2014-03-01     </div>`)[0];
+                popup_d6f8da5703223f5b99f53eae7275ee82.setContent(html_d52c8d560dfc47113837bc1c0bea0766);
+            
+        
+
+        marker_91a05943293e7de2936c171bad4421d8.bindPopup(popup_d6f8da5703223f5b99f53eae7275ee82)
+        ;
+
+        
+    
+    
+            marker_91a05943293e7de2936c171bad4421d8.bindTooltip(
+                `<div>
+                     S.Yolu Yenikapı-Kumkapı yönü Trafik kazası (hasarlı)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_91a05943293e7de2936c171bad4421d8.setIcon(icon_b813ff2923dc8ddd2b17f57de10437b7);
+            
+    
+            var marker_fff51f0781670656c1b7bf6f4de4f8d0 = L.marker(
+                [41.000126, 28.801814],
+                {
+}
+            ).addTo(marker_cluster_2a91eca5b6c90c2edc46bad8c78c4c97);
+        
+    
+            var icon_3710f4bdcdda5988c1ed995684ddaa84 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6b77878b47643290157656bdd607587a = L.popup({
+  "maxWidth": 300,
+  "minWidth": 200,
+});
+
+        
+            
+                var html_6223449c7c876941b81b34080ebd3481 = $(`<div id="html_6223449c7c876941b81b34080ebd3481" style="width: 100.0%; height: 100.0%;">     <b>🗂️ Başlık:</b> D100 Sefaköy-Çobançeşme Yönü  Trafik Kazası (Yaralanmalı)<br>     <b>🕒 Saat:</b> 18:42:00<br>     <b>📅 Tarih:</b> 2017-04-14     </div>`)[0];
+                popup_6b77878b47643290157656bdd607587a.setContent(html_6223449c7c876941b81b34080ebd3481);
+            
+        
+
+        marker_fff51f0781670656c1b7bf6f4de4f8d0.bindPopup(popup_6b77878b47643290157656bdd607587a)
+        ;
+
+        
+    
+    
+            marker_fff51f0781670656c1b7bf6f4de4f8d0.bindTooltip(
+                `<div>
+                     D100 Sefaköy-Çobançeşme Yönü  Trafik Kazası (Yaralanmalı)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_fff51f0781670656c1b7bf6f4de4f8d0.setIcon(icon_3710f4bdcdda5988c1ed995684ddaa84);
+            
+    
+            var marker_3aff8c3e795f526ce98aa3513eafc7d3 = L.marker(
+                [40.989513, 28.792537],
+                {
+}
+            ).addTo(marker_cluster_2a91eca5b6c90c2edc46bad8c78c4c97);
+        
+    
+            var icon_0860e38b1d370212d9e684e79761d98e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_658f824603265b419e75af45d1b64501 = L.popup({
+  "maxWidth": 300,
+  "minWidth": 200,
+});
+
+        
+            
+                var html_f13da9b0510297d814dfb002355b8904 = $(`<div id="html_f13da9b0510297d814dfb002355b8904" style="width: 100.0%; height: 100.0%;">     <b>🗂️ Başlık:</b> D100 Florya-Küçükçekmece Yönü, sağ şerit trafik kazası (hasarlı) nedeni ile 1 şerit trafiğe kapalı. Ekip sevk edildi.<br>     <b>🕒 Saat:</b> 14:16:00<br>     <b>📅 Tarih:</b> 2024-10-02     </div>`)[0];
+                popup_658f824603265b419e75af45d1b64501.setContent(html_f13da9b0510297d814dfb002355b8904);
+            
+        
+
+        marker_3aff8c3e795f526ce98aa3513eafc7d3.bindPopup(popup_658f824603265b419e75af45d1b64501)
+        ;
+
+        
+    
+    
+            marker_3aff8c3e795f526ce98aa3513eafc7d3.bindTooltip(
+                `<div>
+                     D100 Florya-Küçükçekmece Yönü, sağ şerit trafik kazası (hasarlı) nedeni ile 1 şerit trafiğe kapalı. Ekip sevk edildi.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3aff8c3e795f526ce98aa3513eafc7d3.setIcon(icon_0860e38b1d370212d9e684e79761d98e);
+            
+    
+            marker_cluster_2a91eca5b6c90c2edc46bad8c78c4c97.addTo(map_1eab2cc7562fd0c93ec0f20efa136b14);
+        
+    
+            var tile_layer_281c5d30689d76aa98ee1f47a9245046 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detect_retina": false, "max_native_zoom": 19, "max_zoom": 19, "min_zoom": 0, "no_wrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+            var mini_map_4d81721314c3ccc15f453ef031de58aa = new L.Control.MiniMap(
+                tile_layer_281c5d30689d76aa98ee1f47a9245046,
+                {
+  "position": "bottomright",
+  "width": 150,
+  "height": 150,
+  "collapsedWidth": 25,
+  "collapsedHeight": 25,
+  "zoomLevelOffset": -5,
+  "centerFixed": false,
+  "zoomAnimation": false,
+  "toggleDisplay": true,
+  "autoToggleDisplay": false,
+  "minimized": false,
+}
+            );
+            map_1eab2cc7562fd0c93ec0f20efa136b14.addControl(mini_map_4d81721314c3ccc15f453ef031de58aa);
+        
+</script>
+</html>
