@@ -1,0 +1,36 @@
+# macOS system files
+.DS_Store
+
+# Virtual environment directories
+venv/
+.venv/
+
+# Python cache directories and compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# VSCode settings
+.vscode/
+
+# Log files
+*.log
+
+# Temporary files
+*.swp
+*.tmp
+
+# Test coverage reports
+htmlcov/
+coverage.xml
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Build outputs
+build/
+dist/
+*.egg-info/
+
+# PyInstaller output
+*.spec
