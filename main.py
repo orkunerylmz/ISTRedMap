@@ -22,7 +22,6 @@ def missing_rows(df):
     
     return print(rows)
 
-
 def fill_missing_values(df, col, value):
     df.fillna({col: value}, inplace = True)
     return df
@@ -66,7 +65,6 @@ data = data[(data['LATITUDE'] >= 40.5) & (data['LATITUDE'] <= 41.5) & (data['LON
 data.to_csv("cleaned_data.csv", index=False)
 
 print("Cleaned dataset has been successfully saved as 'cleaned_data.csv' in the current directory.")
-
 
 
 
