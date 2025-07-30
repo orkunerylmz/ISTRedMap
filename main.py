@@ -4,9 +4,6 @@ import numpy as np
 
 data = pd.read_csv('data.csv')
 
-
-
-
 def information(df):
     print(df.head())
     print(df.columns)
@@ -44,7 +41,6 @@ def filtered_data(df, col, value):
     return df[df[col] == value]
 
 
-
 information(df = data)
 
 data.drop('CLOSED_LANE', axis=1, inplace=True)
@@ -52,11 +48,6 @@ data.drop('CLOSED_LANE', axis=1, inplace=True)
 check_missing(df = data)
 missing_rows(df = data)
 fill_missing_values(df=data, col = "ANNOUNCEMENT_TITLE", value = "NO TİTLE")
-
-
-
-
-
 
 
 date_cols = ["ANNOUNCEMENT_STARTING_DATETIME", "ANNOUNCEMENT_ENDING_DATETIME", "INTERVENTION_DATETIME"]
@@ -72,6 +63,9 @@ data = filtered_data(df = data, col = "ANNOUNCEMENT_TYPE_DESC", value = "Kaza Bi
 
 data = data[(data['LATITUDE'] >= 40.5) & (data['LATITUDE'] <= 41.5) & (data['LONGITUDE'] >= 28.5) & (data['LONGITUDE'] <= 29.5)]
 
+data.to_csv("cleaned_data.csv", index=False)
+
+print("Cleaned dataset has been successfully saved as 'cleaned_data.csv' in the current directory.")
 
 
 
