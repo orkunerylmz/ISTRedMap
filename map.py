@@ -4,7 +4,7 @@ from itertools import cycle
 from folium.plugins import HeatMap, MarkerCluster, MiniMap
 
 
-data = pd.read_csv("cleaned_data.csv").sample(200)
+data = pd.read_csv("cleaned_data.csv").sample(10)
 
 m = folium.Map(location=[41.0082, 28.9784], zoom_start=11)
 
